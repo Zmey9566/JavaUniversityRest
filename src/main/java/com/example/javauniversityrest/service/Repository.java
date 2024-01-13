@@ -1,23 +1,21 @@
 package com.example.javauniversityrest.service;
 
-import com.example.javauniversityrest.dao.RepositoryDao;
-import com.example.javauniversityrest.model.Mentor;
+
 import com.example.javauniversityrest.util.MapperUtils;
-import lombok.Data;
-import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
 
 
-public class Repository<M, R, S, V> implements Service<M, R, S, V>{
+public abstract class Repository<M, R, S, V> implements Service<M, R, S, V> {
 
-    private final RepositoryDao<M,V> repositoryDao;
+    private final JpaRepository<M, V> repositoryDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MapperUtils mapperUtils;
 
-    public Repository(RepositoryDao repositoryDao, BCryptPasswordEncoder bCryptPasswordEncoder, MapperUtils mapperUtils) {
+    public Repository(JpaRepository<M, V> repositoryDao, BCryptPasswordEncoder bCryptPasswordEncoder, MapperUtils mapperUtils) {
         this.repositoryDao = repositoryDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.mapperUtils = mapperUtils;
@@ -25,7 +23,7 @@ public class Repository<M, R, S, V> implements Service<M, R, S, V>{
 
     @Override
     public void save(M model, S saveDto) {
-        model = (M) mapperUtils.mapToModelSave(saveDto, (Class) model);
+//        model = (M) mapperUtils.mapToModelSave(saveDto, model.getClass());
         repositoryDao.save(model);
     }
 

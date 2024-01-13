@@ -16,15 +16,20 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotEmpty(message = "Заполните поле Фамилия")
     private String family;
+
     @NotEmpty(message = "Заполните поле Имя")
     private String name;
+
     @Email
     @Column(unique = true)
     private String email;
+
     @ManyToOne
     private Role role;
+
     private String password;
 
     public Admin(String family, String name, String email, Role role, String password) {
