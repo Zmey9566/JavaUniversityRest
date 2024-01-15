@@ -16,6 +16,7 @@ import com.example.javauniversityrest.model.Student;
 import com.example.javauniversityrest.service.AdminServiceImpl;
 import com.example.javauniversityrest.service.MentorServiceImpl;
 import com.example.javauniversityrest.service.StudentServiceImpl;
+import com.example.javauniversityrest.util.MapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -36,12 +37,16 @@ public class AdminServiceTest extends TestBase {
     AdminServiceImpl adminService;
     MentorServiceImpl mentorService;
     StudentServiceImpl studentService;
+    AdminDao adminDao;
+    MapperUtils<Admin, AdminReadDto, AdminSaveDto> mapperUtils;
 
     @Autowired
-    public AdminServiceTest(AdminServiceImpl adminService, MentorServiceImpl mentorService, StudentServiceImpl studentService) {
+    public AdminServiceTest(AdminServiceImpl adminService, AdminDao adminDao, MentorServiceImpl mentorService, StudentServiceImpl studentService, MapperUtils<Admin, AdminReadDto, AdminSaveDto> mapperUtils) {
         this.adminService = adminService;
         this.mentorService = mentorService;
         this.studentService = studentService;
+        this.adminDao = adminDao;
+        this.mapperUtils = mapperUtils;
     }
 
     RoleSaveDto role1 = new RoleSaveDto("ROLE_ADMIN");
@@ -153,6 +158,7 @@ public class AdminServiceTest extends TestBase {
         adminService.save(admin, Admin.class);
         adminService.save(admin2, Admin.class);
         adminService.save(admin3, Admin.class);
-        System.out.println(adminService.findByEmail("aaa1@mail.ru", AdminReadDto.class));
+        Admin byEmail = adminDao.findByEmail("aaa3@mail.ru");
+        System.out.println(mapperUtils.mapToModelReadDto(byEmail, AdminReadDto.class));
     }
 }

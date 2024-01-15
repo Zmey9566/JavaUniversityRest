@@ -1,12 +1,14 @@
 package com.example.javauniversityrest.service;
 
 
+import com.example.javauniversityrest.dao.AdminDao;
 import com.example.javauniversityrest.util.MapperUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
 public abstract class Repository<M, R, S, V, K> implements Service<M, R, S, V, K> {
@@ -38,11 +40,6 @@ public abstract class Repository<M, R, S, V, K> implements Service<M, R, S, V, K
     @Override
     public Optional<R> findById(V id, Class<R> clazz) {
         return (Optional<R>) repositoryDao.findById(id)
-                .map(m -> Optional.of(mapperUtils.mapToModelReadDto(m, clazz)))
-                .orElse(null);
-    }    @Override
-    public Optional<R> findByEmail(K email, Class<R> clazz) {
-        return (Optional<R>) repositoryDao.findByEmail(email, clazz)
                 .map(m -> Optional.of(mapperUtils.mapToModelReadDto(m, clazz)))
                 .orElse(null);
     }
