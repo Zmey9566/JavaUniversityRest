@@ -27,12 +27,12 @@ public class Admin {
     @Column(unique = true)
     private String email;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
 
     private String password;
 
-    public Admin(String family, String name, String email, Role role, String password) {
+    public Admin(String family, String name, String email, Role role,String password) {
         this.family = family;
         this.name = name;
         this.email = email;

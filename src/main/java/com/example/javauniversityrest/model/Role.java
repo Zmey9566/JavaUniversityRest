@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "role")
 @Data
-@ToString
+@ToString(exclude = {"adminRoles"})
 @RequiredArgsConstructor
 public class Role implements GrantedAuthority {
 

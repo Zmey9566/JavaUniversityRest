@@ -33,6 +33,6 @@ public class Student {
     private final List<MentorStudent> mentorStudentList = new ArrayList<>();
     @OneToMany(mappedBy = "student")
     private final List<MentorStudentLesson> mentorStudentLessonList = new ArrayList<>();
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
 }

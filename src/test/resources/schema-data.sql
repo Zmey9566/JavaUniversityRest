@@ -1,11 +1,19 @@
 ----------
 --Create table Mentor
 ----------
--- DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS admin;
 -- DROP TABLE IF EXISTS mentor_student;
--- DROP TABLE IF EXISTS student;
--- DROP TABLE IF EXISTS mentor;
--- DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS student;
+DROP TABLE IF EXISTS mentor;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS role;
+
+
+CREATE TABLE role
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(40)
+);
 
 CREATE TABLE IF NOT EXISTS admin
 (
@@ -13,10 +21,8 @@ CREATE TABLE IF NOT EXISTS admin
     family varchar(25),
     name   varchar(25),
     email varchar(50),
-    role varchar(50),
+    role_id INT references role (id) ON DELETE CASCADE,
     password varchar(50)
---     ,
---     role varchar(20)
 );
 
 CREATE TABLE IF NOT EXISTS mentor
@@ -25,9 +31,36 @@ CREATE TABLE IF NOT EXISTS mentor
     family varchar(25),
     name   varchar(25),
     email varchar(50),
-    role varchar(50),
+    role_id INT references role (id) ON DELETE CASCADE,
     password varchar(50)
 );
+
+CREATE TABLE IF NOT EXISTS student
+(
+    id     SERIAL PRIMARY KEY,
+    family varchar(25),
+    name   varchar(25),
+    email varchar(50),
+    level varchar(50),
+    role_id INT references role (id) ON DELETE CASCADE,
+    password varchar(50)
+);
+
+CREATE TABLE IF NOT EXISTS users
+(
+    id     SERIAL PRIMARY KEY,
+    family varchar(25),
+    name   varchar(25),
+    email varchar(50),
+    role_id INT references role (id) ON DELETE CASCADE,
+    password varchar(50)
+);
+
+insert into role(name)
+values
+    ('ROLE_ADMIN'),
+    ('ROLE_MENTOR'),
+    ('ROLE_STUDENT');
 --
 -- INSERT into mentor
 -- (family, name, price, email, password) /*, role*/

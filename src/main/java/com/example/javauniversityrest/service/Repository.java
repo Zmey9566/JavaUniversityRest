@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public abstract class Repository<M, R, S, V> implements Service<M, R, S, V> {
+public abstract class Repository<M, R, S, V, K> implements Service<M, R, S, V, K> {
 
     private final JpaRepository<M, V> repositoryDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -22,13 +22,13 @@ public abstract class Repository<M, R, S, V> implements Service<M, R, S, V> {
     }
 
     @Override
-    public void save(M model, S saveDto) {
-//        model = (M) mapperUtils.mapToModelSave(saveDto, model.getClass());
+    public void save(S saveDto, Class<M> clazz) {
+        M model = (M) mapperUtils.mapToModelSave(saveDto, clazz);
         repositoryDao.save(model);
     }
 
     @Override
-    public List<R> getAll(Class<R> clazz) {
+    public List<R> getAllByModel(Class<R> clazz) {
         List<M> models = repositoryDao.findAll();
         return (List<R>) models.stream()
                 .map(m -> mapperUtils.mapToModelReadDto(m, clazz))
@@ -38,6 +38,11 @@ public abstract class Repository<M, R, S, V> implements Service<M, R, S, V> {
     @Override
     public Optional<R> findById(V id, Class<R> clazz) {
         return (Optional<R>) repositoryDao.findById(id)
+                .map(m -> Optional.of(mapperUtils.mapToModelReadDto(m, clazz)))
+                .orElse(null);
+    }    @Override
+    public Optional<R> findByEmail(K email, Class<R> clazz) {
+        return (Optional<R>) repositoryDao.findByEmail(email, clazz)
                 .map(m -> Optional.of(mapperUtils.mapToModelReadDto(m, clazz)))
                 .orElse(null);
     }

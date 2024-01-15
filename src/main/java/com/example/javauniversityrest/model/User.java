@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @ToString
@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
 
     @Override

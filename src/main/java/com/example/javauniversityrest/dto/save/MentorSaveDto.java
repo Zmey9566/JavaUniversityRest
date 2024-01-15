@@ -5,7 +5,9 @@ import com.example.javauniversityrest.model.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Data
 public class MentorSaveDto {
 
@@ -14,7 +16,15 @@ public class MentorSaveDto {
     @NotEmpty(message = "поле Имя не должно быть пустым")
     private String name;
     private String email;
-    private Role role;
+    private RoleSaveDto role;
     private MentorStudent mentorStudent;
     private String password;
+
+    public MentorSaveDto(String family, String name, String email, RoleSaveDto role, String password) {
+        this.family = family;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
 }

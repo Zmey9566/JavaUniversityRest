@@ -9,13 +9,13 @@ import java.util.List;
 
 public class AdminController {
 
-    private final Service<Admin, AdminReadDto, AdminSaveDto, Long> service;
+//    private final Service<Admin, AdminReadDto, AdminSaveDto, Long, String> service;
 
-    public AdminController(Service<Admin, AdminReadDto, AdminSaveDto, Long> service) {
-        this.service = service;
-    }
+//    public AdminController(Service<Admin, AdminReadDto, AdminSaveDto, Long> service) {
+//        this.service = service;
+//    }
 
-    public List<AdminReadDto> adminIndex(Class<AdminReadDto> clazz) {
-        return service.getAll(clazz);
-    }
+//    public List<AdminReadDto> adminIndex(Class<AdminReadDto> clazz) {
+//        return service.getAll(clazz);
+//    }
 }
