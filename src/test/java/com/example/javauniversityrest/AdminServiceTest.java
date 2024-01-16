@@ -3,7 +3,6 @@ package com.example.javauniversityrest;
 import com.example.javauniversityrest.dao.AdminDao;
 import com.example.javauniversityrest.dto.read.AdminReadDto;
 import com.example.javauniversityrest.dto.read.MentorReadDto;
-import com.example.javauniversityrest.dto.read.RoleReadDto;
 import com.example.javauniversityrest.dto.read.StudentReadDto;
 import com.example.javauniversityrest.dto.save.AdminSaveDto;
 import com.example.javauniversityrest.dto.save.MentorSaveDto;
@@ -11,24 +10,21 @@ import com.example.javauniversityrest.dto.save.RoleSaveDto;
 import com.example.javauniversityrest.dto.save.StudentSaveDto;
 import com.example.javauniversityrest.model.Admin;
 import com.example.javauniversityrest.model.Mentor;
-import com.example.javauniversityrest.model.Role;
 import com.example.javauniversityrest.model.Student;
 import com.example.javauniversityrest.service.AdminServiceImpl;
 import com.example.javauniversityrest.service.MentorServiceImpl;
 import com.example.javauniversityrest.service.StudentServiceImpl;
 import com.example.javauniversityrest.util.MapperUtils;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
@@ -65,6 +61,7 @@ public class AdminServiceTest extends TestBase {
 
 
 
+
     @Test
     void saveTest() {
         adminService.save(admin, Admin.class);
@@ -73,7 +70,6 @@ public class AdminServiceTest extends TestBase {
                 () -> assertEquals(adminDto.get().getFamily(), admin.getFamily()),
                 () -> assertEquals(adminDto.get().getName(), admin.getName()),
                 () -> assertEquals(adminDto.get().getEmail(), admin.getEmail()),
-                () -> assertEquals(adminDto.get().getPassword(), admin.getPassword()),
                 () -> assertEquals(adminDto.get().getRole().getName(), admin.getRole().getName())
         );
     }
@@ -100,14 +96,15 @@ public class AdminServiceTest extends TestBase {
         adminService.save(admin3, Admin.class);
         List<AdminReadDto> allByModel = adminService.getAllByModel(AdminReadDto.class);
         AdminReadDto findedAdmin1 = allByModel.stream().filter(a -> a.getId() == 1).findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 2 не найден"));
+                .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
         AdminReadDto findedAdmin2 = allByModel.stream().filter(a -> a.getId() == 2).findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 2 не найден"));
         AdminReadDto findedAdmin3 = allByModel.stream().filter(a -> a.getId() == 3).findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 2 не найден"));
+                .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 3 не найден"));
         findedAdmin1.setFamily("Petrov");
         findedAdmin2.setName("Dima");
         findedAdmin3.setEmail("bbbb@mail.ru");
+        findedAdmin1.setPassword("qwerty11");
         adminService.update(findedAdmin1, 1l, Admin.class);
         adminService.update(findedAdmin2, 2l, Admin.class);
         adminService.update(findedAdmin3, 3l, Admin.class);

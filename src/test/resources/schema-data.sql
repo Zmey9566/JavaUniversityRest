@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS admin
     name   varchar(25),
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(50)
+    password varchar(100)
 );
 
 CREATE TABLE IF NOT EXISTS mentor
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS mentor
     name   varchar(25),
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(50)
+    password varchar(100)
 );
 
 CREATE TABLE IF NOT EXISTS student
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS student
     email varchar(50),
     level varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(50)
+    password varchar(100)
 );
 
 CREATE TABLE IF NOT EXISTS users
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS users
     name   varchar(25),
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(50)
+    password varchar(100)
 );
 
 insert into role(name)
