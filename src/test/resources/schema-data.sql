@@ -49,8 +49,6 @@ CREATE TABLE IF NOT EXISTS student
 CREATE TABLE IF NOT EXISTS users
 (
     id     SERIAL PRIMARY KEY,
-    family varchar(25),
-    name   varchar(25),
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
     password varchar(100)

@@ -1,14 +1,13 @@
 package com.example.javauniversityrest.model;
 
+import com.example.javauniversityrest.service.PersonGetSet;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,14 +16,15 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class User implements UserDetails {
+@Builder
+@Component
+public class User implements UserDetails, PersonGetSet<Role> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String family;
-    private String name;
     @Email
     @Column(unique = true)
     private String email;

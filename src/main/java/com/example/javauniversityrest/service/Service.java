@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface Service<M, R, S, V, K, P> { //M - model, R - readDto, S - saveDto, V - typeID, K - typeEmail
-    void save(S saveDto, Class<M> clazz);
+public interface Service<M, R, S, V, K, P, U, Usdto> { //M - model, R - readDto, S - saveDto, V - typeID, K - typeEmail
+    void save(S saveDto, Class<M> clazz, Usdto userSaveDto, Class<U> uClass);
     List<R> getAllByModel(Class<R> clazz);
     Optional<R> findById(V id, Class<R> clazz);
     void update(R readDto, V id, Class<M> clazz);

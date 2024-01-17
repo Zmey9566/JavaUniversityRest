@@ -3,8 +3,12 @@ package com.example.javauniversityrest.dto.read;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
+@RequiredArgsConstructor
 public class AdminReadDto {
 
     private Long id;
@@ -15,4 +19,12 @@ public class AdminReadDto {
     private String email;
     private RoleReadDto role;
     private String password;
+
+    public AdminReadDto(String family, String name, String email, RoleReadDto role, String password) {
+        this.family = family;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
 }

@@ -18,7 +18,7 @@ public class MentorReadDto {
     private String name;
 
     private String email;
-    private Role role;
+    private RoleReadDto role;
     private MentorStudent mentorStudent;
     private String password;
 }

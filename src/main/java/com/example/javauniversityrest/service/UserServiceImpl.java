@@ -1,14 +1,15 @@
 package com.example.javauniversityrest.service;
 
 
-import com.example.javauniversityrest.model.Admin;
-import com.example.javauniversityrest.model.User;
+import com.example.javauniversityrest.dao.UserDao;
 import com.example.javauniversityrest.util.MapperUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public class UserServiceImpl extends Repository {
-    public UserServiceImpl(JpaRepository repositoryDao, BCryptPasswordEncoder bCryptPasswordEncoder, MapperUtils mapperUtils, GetSet<User, String> getSet) {
-        super(repositoryDao, bCryptPasswordEncoder, mapperUtils, getSet);
+@Service
+public class UserServiceImpl extends BaseService {
+    public UserServiceImpl(UserDao userDao, UserDao userDao1, BCryptPasswordEncoder bCryptPasswordEncoder, MapperUtils mapperUtils) {
+        super(userDao, userDao1, bCryptPasswordEncoder, mapperUtils);
     }
 }
