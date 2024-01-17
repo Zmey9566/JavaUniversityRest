@@ -22,19 +22,31 @@ public class MapperUtils<M, R, S> {
 
     ModelMapper modelMapper = new ModelMapper();
 
-    public R mapToModelReadDto (M m, Class<? extends R> R) {return modelMapper.map(m, R);}
-    public R mapToModelSaveDto (M m, Class<? extends R> S) {return modelMapper.map(m, S);}
-    public M mapToModelRead (R r, Class<? extends M> M) {return modelMapper.map(r, M);}
-    public M mapToModelSave (S s, Class<? extends M> M) {return modelMapper.map(s, M);}
+    public R mapToModelReadDto(M m, Class<? extends R> R) {
+        return modelMapper.map(m, R);
+    }
+
+    public R mapToModelSaveDto(M m, Class<? extends R> S) {
+        return modelMapper.map(m, S);
+    }
+
+    public M mapToModelRead(R r, Class<? extends M> M) {
+        return modelMapper.map(r, M);
+    }
+
+    public M mapToModelSave(S s, Class<? extends M> M) {
+        return modelMapper.map(s, M);
+    }
 
     /**
      * Mapper from Admin to AdminDto
      */
 
-    public AdminReadDto mapToAdminReadDto (Admin admin) {
+    public AdminReadDto mapToAdminReadDto(Admin admin) {
         return modelMapper.map(admin, AdminReadDto.class);
     }
-    public AdminSaveDto mapToAdminSaveDto (Admin admin) {
+
+    public AdminSaveDto mapToAdminSaveDto(Admin admin) {
         return modelMapper.map(admin, AdminSaveDto.class);
     }
 
@@ -42,10 +54,11 @@ public class MapperUtils<M, R, S> {
      * Mapper from AdminDto to Admin
      */
 
-    public Admin mapToAdminRead (AdminReadDto adminReadDto){
+    public Admin mapToAdminRead(AdminReadDto adminReadDto) {
         return modelMapper.map(adminReadDto, Admin.class);
     }
-    public Admin mapToAdminSave (AdminSaveDto adminSaveDto){
+
+    public Admin mapToAdminSave(AdminSaveDto adminSaveDto) {
         return modelMapper.map(adminSaveDto, Admin.class);
     }
 
@@ -53,10 +66,11 @@ public class MapperUtils<M, R, S> {
      * Mapper from Mentor to MentorDto
      */
 
-    public MentorReadDto mapToMentorReadDto (Mentor mentor) {
+    public MentorReadDto mapToMentorReadDto(Mentor mentor) {
         return modelMapper.map(mentor, MentorReadDto.class);
     }
-    public MentorSaveDto mapToMentorSaveDto (Mentor mentor) {
+
+    public MentorSaveDto mapToMentorSaveDto(Mentor mentor) {
         return modelMapper.map(mentor, MentorSaveDto.class);
     }
 
@@ -64,10 +78,11 @@ public class MapperUtils<M, R, S> {
      * Mapper from MentorDto to Mentor
      */
 
-    public Mentor mapToMentorRead (MentorReadDto mentorReadDto){
+    public Mentor mapToMentorRead(MentorReadDto mentorReadDto) {
         return modelMapper.map(mentorReadDto, Mentor.class);
     }
-    public Mentor mapToMentorSave (MentorSaveDto mentorSaveDto){
+
+    public Mentor mapToMentorSave(MentorSaveDto mentorSaveDto) {
         return modelMapper.map(mentorSaveDto, Mentor.class);
     }
 
@@ -75,10 +90,11 @@ public class MapperUtils<M, R, S> {
      * Mapper from Student to StudentDto
      */
 
-    public StudentReadDto mapToStudentReadDto (Student student) {
+    public StudentReadDto mapToStudentReadDto(Student student) {
         return modelMapper.map(student, StudentReadDto.class);
     }
-    public StudentSaveDto mapToStudentSaveDto (Student student) {
+
+    public StudentSaveDto mapToStudentSaveDto(Student student) {
         return modelMapper.map(student, StudentSaveDto.class);
     }
 
@@ -86,10 +102,11 @@ public class MapperUtils<M, R, S> {
      * Mapper from StudentDto to Student
      */
 
-    public Student mapToStudentRead (StudentReadDto studentReadDto){
+    public Student mapToStudentRead(StudentReadDto studentReadDto) {
         return modelMapper.map(studentReadDto, Student.class);
     }
-    public Student mapToStudentSave (StudentSaveDto studentSaveDto){
+
+    public Student mapToStudentSave(StudentSaveDto studentSaveDto) {
         return modelMapper.map(studentSaveDto, Student.class);
     }
 
@@ -97,10 +114,11 @@ public class MapperUtils<M, R, S> {
      * Mapper from Lesson to LessonDto
      */
 
-    public LessonReadDto mapToLessonReadDto (Lesson lesson) {
+    public LessonReadDto mapToLessonReadDto(Lesson lesson) {
         return modelMapper.map(lesson, LessonReadDto.class);
     }
-    public LessonSaveDto mapToLessonSaveDto (Lesson lesson) {
+
+    public LessonSaveDto mapToLessonSaveDto(Lesson lesson) {
         return modelMapper.map(lesson, LessonSaveDto.class);
     }
 
@@ -108,10 +126,11 @@ public class MapperUtils<M, R, S> {
      * Mapper from LessonDto to Lesson
      */
 
-    public Lesson mapToLessonRead (LessonReadDto lessonReadDto){
+    public Lesson mapToLessonRead(LessonReadDto lessonReadDto) {
         return modelMapper.map(lessonReadDto, Lesson.class);
     }
-    public Lesson mapToLessonSave (LessonSaveDto lessonSaveDto){
+
+    public Lesson mapToLessonSave(LessonSaveDto lessonSaveDto) {
         return modelMapper.map(lessonSaveDto, Lesson.class);
     }
 }

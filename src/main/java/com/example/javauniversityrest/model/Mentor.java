@@ -1,13 +1,12 @@
 package com.example.javauniversityrest.model;
 
-import com.example.javauniversityrest.service.GetSet;
+import com.example.javauniversityrest.service.ChangePassword;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Component
-public class Mentor {
+public class Mentor implements ChangePassword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,19 +37,4 @@ public class Mentor {
     private final List<MentorStudentLesson> mentorStudentLessonList = new ArrayList<>();
     @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
-
-    @Bean
-    GetSet<Mentor, String> getSet2() {
-        return new GetSet<Mentor, String>() {
-            @Override
-            public String getPassword(Mentor model) {
-                return model.getPassword();
-            }
-
-            @Override
-            public void setPassword(Mentor model, String password) {
-                model.setPassword(password);
-            }
-        };
-    }
 }

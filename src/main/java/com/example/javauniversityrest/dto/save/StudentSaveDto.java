@@ -1,7 +1,7 @@
 package com.example.javauniversityrest.dto.save;
 
 import com.example.javauniversityrest.model.MentorStudent;
-import com.example.javauniversityrest.model.Role;
+import com.example.javauniversityrest.service.ChangePassword;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Data
-public class StudentSaveDto {
+public class StudentSaveDto implements ChangePassword {
 
     @Size(min = 2, max = 20, message = "Длина поляфамилия не должна быть менее 2 и более 20 символов")
     private String family;

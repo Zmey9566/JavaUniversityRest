@@ -21,7 +21,7 @@ import java.io.IOException;
 public class WebSecurityConfig {
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -32,11 +32,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("forAdmin/**")
-                                    .hasRole("ADMIN")
+                                .hasRole("ADMIN")
                                 .requestMatchers("forMentor")
-                                    .hasRole("MENTOR")
+                                .hasRole("MENTOR")
                                 .requestMatchers("forStudent")
-                                    .hasRole("STUDENT")
+                                .hasRole("STUDENT")
                                 .anyRequest().authenticated()
                 )
                 .logout(Customizer.withDefaults())
