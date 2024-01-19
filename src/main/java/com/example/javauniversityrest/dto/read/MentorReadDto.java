@@ -5,8 +5,12 @@ import com.example.javauniversityrest.model.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
+@RequiredArgsConstructor
 public class MentorReadDto {
 
     private Long id;

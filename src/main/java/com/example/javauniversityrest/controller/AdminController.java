@@ -9,6 +9,7 @@ import com.example.javauniversityrest.model.User;
 import com.example.javauniversityrest.service.AdminServiceImpl;
 import com.example.javauniversityrest.service.UserServiceImpl;
 import com.example.javauniversityrest.util.MapperUtils;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,25 +25,16 @@ import java.util.Optional;
 public class AdminController {
 
     private final AdminServiceImpl adminService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final MapperUtils<Admin, AdminReadDto, AdminSaveDto> mapperUtils;
-    private final UserServiceImpl userService;
-    private final AdminDao adminDao;
 
     @Autowired
-    public AdminController(AdminServiceImpl adminService, BCryptPasswordEncoder bCryptPasswordEncoder,
-                           MapperUtils<Admin, AdminReadDto, AdminSaveDto> mapperUtils, UserServiceImpl userService, AdminDao adminDao) {
+    public AdminController(AdminServiceImpl adminService) {
         this.adminService = adminService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.mapperUtils = mapperUtils;
-        this.userService = userService;
-        this.adminDao = adminDao;
     }
 
     @GetMapping
     public ResponseEntity<List<AdminReadDto>> showAdmins() {
         List<AdminReadDto> admins = new ArrayList<>();
-        for (AdminReadDto admin : adminService.getAllByModel(AdminReadDto.class)) {
+        for (AdminReadDto admin : adminService.getAllByModel()) {
             admins.add(admin);
         }
         return new ResponseEntity<>(admins, HttpStatus.OK);
@@ -50,12 +42,24 @@ public class AdminController {
 
     @GetMapping("/admins/{id}")
     public ResponseEntity<Optional<AdminReadDto>> showAdmin(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(adminService.findById(id, AdminReadDto.class), HttpStatus.OK);
+        return new ResponseEntity<>(adminService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping("/admins/addNewAdmin")
-    public ResponseEntity<HttpStatus> addNewAdmin(@RequestBody AdminSaveDto adminSaveDto, @RequestBody UserSaveDto userSaveDto) {
-        adminService.save(adminSaveDto, Admin.class, userSaveDto, User.class);
+    public ResponseEntity<HttpStatus> addNewAdmin(@RequestBody AdminSaveDto adminSaveDto) {
+        adminService.save(adminSaveDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/admins/{id}")
+    public ResponseEntity<HttpStatus> deleteAdmin(@PathVariable Long id) {
+        adminService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/admins/{id}")
+    public ResponseEntity<HttpStatus> updateAdmin(@RequestBody @NotNull AdminReadDto adminReadDto, @PathVariable Long id) {
+        adminService.update(adminReadDto, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

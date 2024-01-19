@@ -2,9 +2,7 @@ package com.example.javauniversityrest;
 
 import com.example.javauniversityrest.dao.AdminDao;
 import com.example.javauniversityrest.dao.UserDao;
-import com.example.javauniversityrest.dto.read.AdminReadDto;
-import com.example.javauniversityrest.dto.read.MentorReadDto;
-import com.example.javauniversityrest.dto.read.StudentReadDto;
+import com.example.javauniversityrest.dto.read.*;
 import com.example.javauniversityrest.dto.save.*;
 import com.example.javauniversityrest.model.Admin;
 import com.example.javauniversityrest.model.Mentor;
@@ -13,6 +11,7 @@ import com.example.javauniversityrest.model.User;
 import com.example.javauniversityrest.service.AdminServiceImpl;
 import com.example.javauniversityrest.service.MentorServiceImpl;
 import com.example.javauniversityrest.service.StudentServiceImpl;
+import com.example.javauniversityrest.service.UserServiceImpl;
 import com.example.javauniversityrest.util.MapperUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +31,25 @@ public class AdminServiceTest extends TestBase {
     AdminServiceImpl adminService;
     MentorServiceImpl mentorService;
     StudentServiceImpl studentService;
+    UserServiceImpl userService;
     AdminDao adminDao;
     UserDao userDao;
     MapperUtils<Admin, AdminReadDto, AdminSaveDto> mapperUtils;
 
     @Autowired
-    public AdminServiceTest(AdminServiceImpl adminService, AdminDao adminDao, MentorServiceImpl mentorService, StudentServiceImpl studentService, MapperUtils<Admin, AdminReadDto, AdminSaveDto> mapperUtils, UserDao userDao) {
+    public AdminServiceTest(AdminServiceImpl adminService, AdminDao adminDao, MentorServiceImpl mentorService, StudentServiceImpl studentService, MapperUtils<Admin, AdminReadDto, AdminSaveDto> mapperUtils, UserDao userDao, UserServiceImpl userService) {
         this.adminService = adminService;
         this.mentorService = mentorService;
         this.studentService = studentService;
         this.adminDao = adminDao;
         this.mapperUtils = mapperUtils;
         this.userDao = userDao;
+        this.userService = userService;
     }
 
     RoleSaveDto role1 = new RoleSaveDto("ROLE_ADMIN");
     RoleSaveDto role2 = new RoleSaveDto("ROLE_STUDENT");
+    RoleReadDto role4 = new RoleReadDto("ROLE_STUDENT");
     RoleSaveDto role3 = new RoleSaveDto("ROLE_MENTOR");
 
     AdminSaveDto admin = new AdminSaveDto("Ivanov1", "Ivan", "aaa1@mail.ru", role1, "123456");
@@ -59,44 +61,44 @@ public class AdminServiceTest extends TestBase {
     MentorSaveDto mentor1 = new MentorSaveDto("Sidorov1", "Ivan", "vvv1@mail.ru", role3, "123456");
     MentorSaveDto mentor2 = new MentorSaveDto("Sidorov2", "Ivan", "vvv2@mail.ru", role3, "123456");
     MentorSaveDto mentor3 = new MentorSaveDto("Sidorov3", "Ivan", "vvv3@mail.ru", role3, "123456");
-    UserSaveDto userSaveDto = new UserSaveDto();
 
 
 
     @Test
     void saveTest() {
-        adminService.save(admin, Admin.class, userSaveDto, User.class);
-        Optional<AdminReadDto> adminDto = adminService.findById(1L, AdminReadDto.class);
+        adminService.save(admin);
+        Optional<AdminReadDto> adminDto = adminService.findById(1L);
         assertAll(
                 () -> assertEquals(adminDto.get().getFamily(), admin.getFamily()),
                 () -> assertEquals(adminDto.get().getName(), admin.getName()),
                 () -> assertEquals(adminDto.get().getEmail(), admin.getEmail()),
                 () -> assertEquals(adminDto.get().getRole().getName(), admin.getRole().getName())
         );
-        System.out.println(userDao.findById(1L));
+        Optional<UserReadDto> userDTO = userService.findById(1L);
+        System.out.println("USER: " + userDTO);
     }
 
     @Test
     void getAllTest() {
-        adminService.save(admin, Admin.class, userSaveDto, User.class);
-        adminService.save(admin2, Admin.class, userSaveDto, User.class);
-        adminService.save(admin3, Admin.class, userSaveDto, User.class);
-        mentorService.save(mentor1, Mentor.class, userSaveDto, User.class);
-        studentService.save(student1, Student.class, userSaveDto, User.class);
+        adminService.save(admin);
+        adminService.save(admin2);
+        adminService.save(admin3);
+        mentorService.save(mentor1);
+        studentService.save(student1);
 
         assertAll(
-                () -> assertEquals(adminService.getAllByModel(AdminReadDto.class).size(), 3),
-                () -> assertEquals(mentorService.getAllByModel(MentorReadDto.class).size(), 1),
-                () -> assertEquals(studentService.getAllByModel(StudentReadDto.class).size(), 1)
+                () -> assertEquals(adminService.getAllByModel().size(), 3),
+                () -> assertEquals(mentorService.getAllByModel().size(), 1),
+                () -> assertEquals(studentService.getAllByModel().size(), 1)
         );
     }
 
     @Test
     void updateTest() {
-        adminService.save(admin, Admin.class, userSaveDto, User.class);
-        adminService.save(admin2, Admin.class, userSaveDto, User.class);
-        adminService.save(admin3, Admin.class, userSaveDto, User.class);
-        List<AdminReadDto> allByModel = adminService.getAllByModel(AdminReadDto.class);
+        adminService.save(admin);
+        adminService.save(admin2);
+        adminService.save(admin3);
+        List<AdminReadDto> allByModel = adminService.getAllByModel();
         AdminReadDto findedAdmin1 = allByModel.stream().filter(a -> a.getId() == 1).findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 1 не найден"));
         AdminReadDto findedAdmin2 = allByModel.stream().filter(a -> a.getId() == 2).findFirst()
@@ -106,25 +108,31 @@ public class AdminServiceTest extends TestBase {
         findedAdmin1.setFamily("Petrov");
         findedAdmin2.setName("Dima");
         findedAdmin3.setEmail("bbbb@mail.ru");
+        findedAdmin1.setEmail("bbbb@mail.ru");
         findedAdmin1.setPassword("qwerty11");
-        adminService.update(findedAdmin1, 1l, Admin.class);
-        adminService.update(findedAdmin2, 2l, Admin.class);
-        adminService.update(findedAdmin3, 3l, Admin.class);
+        findedAdmin1.setRole(role4);
+        adminService.update(findedAdmin1, 1L);
+        adminService.update(findedAdmin2, 2l);
+        adminService.update(findedAdmin3, 3l);
 
         assertAll(
                 () -> assertEquals(findedAdmin1.getFamily(), "Petrov"),
                 () -> assertEquals(findedAdmin2.getName(), "Dima"),
                 () -> assertEquals(findedAdmin3.getEmail(), "bbbb@mail.ru")
         );
+
+        System.out.println("Admin Before: " + admin);
+        System.out.println("Admin After: " + findedAdmin1);
+        System.out.println("User After: " + userService.findById(1L));
     }
 
     @Test
     void deleteByIdTest() {
-        adminService.save(admin, Admin.class, userSaveDto, User.class);
-        adminService.save(admin2, Admin.class, userSaveDto, User.class);
-        adminService.save(admin3, Admin.class, userSaveDto, User.class);
+        adminService.save(admin);
+        adminService.save(admin2);
+        adminService.save(admin3);
 
-        List<AdminReadDto> allByModel = adminService.getAllByModel(AdminReadDto.class);
+        List<AdminReadDto> allByModel = adminService.getAllByModel();
         AdminReadDto findedAdmin1 = allByModel.stream().filter(a -> a.getId() == 1).findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Элемент с индексом 2 не найден"));
         AdminReadDto findedAdmin2 = allByModel.stream().filter(a -> a.getId() == 2).findFirst()
@@ -135,17 +143,17 @@ public class AdminServiceTest extends TestBase {
         adminService.deleteById(2L);
 
         assertAll(
-                () -> assertEquals(adminService.getAllByModel(AdminReadDto.class).size(), 2),
-                () -> assertEquals(adminService.findById(1L, AdminReadDto.class).get().getEmail(), admin.getEmail()),
-                () -> assertEquals(adminService.findById(3L, AdminReadDto.class).get().getEmail(), admin3.getEmail())
+                () -> assertEquals(adminService.getAllByModel().size(), 2),
+                () -> assertEquals(adminService.findById(1L).get().getEmail(), admin.getEmail()),
+                () -> assertEquals(adminService.findById(3L).get().getEmail(), admin3.getEmail())
         );
     }
 
     @Test
     void deleteAllTest() {
-        adminService.save(admin, Admin.class, userSaveDto, User.class);
-        adminService.save(admin2, Admin.class, userSaveDto, User.class);
-        adminService.save(admin3, Admin.class, userSaveDto, User.class);
+        adminService.save(admin);
+        adminService.save(admin2);
+        adminService.save(admin3);
 
         adminService.deleteAll();
 
@@ -154,9 +162,9 @@ public class AdminServiceTest extends TestBase {
 
     @Test
     void findByEmailTest() {
-        adminService.save(admin, Admin.class, userSaveDto, User.class);
-        adminService.save(admin2, Admin.class, userSaveDto, User.class);
-        adminService.save(admin3, Admin.class, userSaveDto, User.class);
+        adminService.save(admin);
+        adminService.save(admin2);
+        adminService.save(admin3);
         Admin byEmail = adminDao.findByEmail("aaa3@mail.ru");
         System.out.println(mapperUtils.mapToModelReadDto(byEmail, AdminReadDto.class));
     }

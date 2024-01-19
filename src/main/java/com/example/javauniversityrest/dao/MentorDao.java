@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MentorDao extends JpaRepository<Mentor, Long> {
+
+    Mentor findByEmail(String email);
 }

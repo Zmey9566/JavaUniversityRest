@@ -16,9 +16,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
-@Builder
 @Component
 public class User implements UserDetails, PersonGetSet<Role> {
 
@@ -29,7 +27,7 @@ public class User implements UserDetails, PersonGetSet<Role> {
     @Column(unique = true)
     private String email;
     private String password;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Role role;
 
     @Override
@@ -60,5 +58,11 @@ public class User implements UserDetails, PersonGetSet<Role> {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User(String email, String password, Role role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 }

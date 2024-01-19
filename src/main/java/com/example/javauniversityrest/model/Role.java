@@ -3,6 +3,7 @@ package com.example.javauniversityrest.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @ToString(exclude = {"adminRoles"})
 @RequiredArgsConstructor
+@Component
 public class Role implements GrantedAuthority {
 
     @Id
