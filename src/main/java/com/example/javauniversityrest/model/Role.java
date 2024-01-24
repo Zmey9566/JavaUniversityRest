@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "role")
 @Data
-@ToString(exclude = {"adminRoles"})
+@ToString(exclude = {"adminRoles", "mentorRoles", "studentRoles", "userRoles"})
 @RequiredArgsConstructor
 @Component
 public class Role implements GrantedAuthority {
@@ -20,18 +20,22 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
     @OneToMany(mappedBy = "role")
     private final List<Admin> adminRoles = new ArrayList<>();
+
     @OneToMany(mappedBy = "role")
     private final List<Mentor> mentorRoles = new ArrayList<>();
+
     @OneToMany(mappedBy = "role")
     private final List<Student> studentRoles = new ArrayList<>();
+
     @OneToMany(mappedBy = "role")
     private final List<User> userRoles = new ArrayList<>();
 
     @Override
     public String getAuthority() {
-        return name;
+        return getName();
     }
 
     public Role(String name) {

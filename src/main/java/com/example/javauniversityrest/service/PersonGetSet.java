@@ -7,6 +7,7 @@ public interface PersonGetSet<T> {
 //    void setFamily(String family);
 //    String getName();
 //    void setName(String name);
+    Long getId();
     String getEmail();
     void setEmail(String email);
     T getRole();

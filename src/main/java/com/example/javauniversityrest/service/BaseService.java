@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +47,7 @@ public abstract class BaseService<M extends PersonGetSet, R, S extends PersonGet
     public List<R> getAllByModel(Class<R> clazz) {
         List<M> models = repositoryDao.findAll();
         return (List<R>) models.stream()
+                .sorted(Comparator.comparingLong(PersonGetSet::getId))
                 .map(m -> mapperUtils.mapToModelReadDto(m, clazz))
                 .toList();
     }
