@@ -29,4 +29,9 @@ public class MentorSaveDto implements PersonGetSet<RoleSaveDto> {
         this.role = role;
         this.password = password;
     }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
 }

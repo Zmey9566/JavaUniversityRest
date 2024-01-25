@@ -29,5 +29,10 @@ public class AdminSaveDto implements PersonGetSet<RoleSaveDto> {
         this.password = password;
         this.role = role;
     }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
 }
 
