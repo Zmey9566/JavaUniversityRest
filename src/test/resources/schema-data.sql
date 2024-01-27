@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS admin
     name   varchar(25),
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(100)
+    password varchar(60)
 );
 
 CREATE TABLE IF NOT EXISTS mentor
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS mentor
     name   varchar(25),
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(100)
+    password varchar(60)
 );
 
 CREATE TABLE IF NOT EXISTS student
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS student
     email varchar(50),
     level varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(100)
+    password varchar(60)
 );
 
 CREATE TABLE IF NOT EXISTS users
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS users
     id     SERIAL PRIMARY KEY,
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE,
-    password varchar(100)
+    password varchar(60)
 );
 
 insert into role(name)
@@ -59,6 +59,32 @@ values
     ('ROLE_ADMIN'),
     ('ROLE_MENTOR'),
     ('ROLE_STUDENT');
+
+-- Заполнение таблицы mentor
+
+insert into mentor( family, name, email, role_id, password)
+values
+    ('Almazov', 'Grigory', 'Almazov@mail.ru', 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('Evmenov', 'Anton', 'Evmenov@mail.ru', 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru');
+
+-- Заполнение таблицы student
+
+insert into student( family, name, email, role_id, password)
+values
+    ('Ivanov', 'Ivan', 'aaa@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('Semenov', 'Semen', 'bbb@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('Smirnov', 'Alex', 'ccc@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('Petrov', 'Petr', 'vvv@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru');
+
+insert into users(email, role_id, password)
+values
+    ('top_secret99@mail.ru', 1, '$2y$10$51ABYWy1u/EKuGIsmQCnxeOzE9sYBB/w8etyjl/ExyPoPL/c89k2u'),
+    ('Almazov@mail.ru', 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('Evmenov@mail.ru', 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('aaa@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('bbb@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('ccc@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('vvv@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru');
 --
 -- INSERT into mentor
 -- (family, name, price, email, password) /*, role*/
