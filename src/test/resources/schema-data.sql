@@ -85,6 +85,12 @@ values
     ('bbb@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
     ('ccc@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
     ('vvv@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru');
+
+
+
+
+
+
 --
 -- INSERT into mentor
 -- (family, name, price, email, password) /*, role*/
