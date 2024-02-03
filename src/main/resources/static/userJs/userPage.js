@@ -2,13 +2,13 @@ const userurl = '/api/user';
 
 const authUser = fetch(userurl).then(response => response.json())
 authUser.then(user => {
-        let roles = ''
-        user.roles.forEach(role => {
-            roles += ' '
-            roles += role.rolename
+        let role = ''
+        user.role.forEach(role => {
+            role += ' '
+            role += role.name
         })
         document.getElementById("navbar-email").innerHTML = user.email
-        document.getElementById("navbar-roles").innerHTML = roles
+        document.getElementById("navbar-roles").innerHTML = role
     }
 )
 
@@ -25,20 +25,19 @@ async function getUserPage() {
 function  getInformationAboutUser(user) {
     const tableBody = document.getElementById('usertbody');
     let dataHtml = '';
-    let roles = [];
+    let role = [];
     console.log('userSata', JSON.stringify(user))
-    for (let role of user.roles) {roles
-        roles.push(" " + role.rolename.toString()
+    for (let role of user.role){
+        role.push(" " + role.name.toString()
             .replaceAll("ROLE_", ""))
     }
     dataHtml =
 `<tr>
     <td>${user.id}</td>
-    <td>${user.firstName}</td>
-    <td>${user.lastName}</td>
-    <td>${user.age}</td>
+    <td>${user.family}</td>
+    <td>${user.name}</td>
     <td>${user.email}</td>
-    <td>${roles}</td>   
+    <td>${role}</td>   
 </tr>`
 
     tableBody.innerHTML = dataHtml;

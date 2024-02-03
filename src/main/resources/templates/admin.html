@@ -18,8 +18,8 @@
         <div>
             <a class="navbar-brand">
                 <strong id="navbar-email" th:font="bold"></strong>
-                with roles:
-                <span id="navbar-roles"></span>
+                with role:
+                <span id="navbar-role"></span>
             </a>
         </div>
         <a th:href="@{/logout}" class="float-right btn text-secondary">Logout</a>
@@ -38,16 +38,23 @@
                             type="button" role="tab"
                             aria-controls="v-pills-admin"
                             aria-selected="true"
-
-                    >Admin</button>
+                    >Администраторы</button>
                     <button class="nav-link"
-                            id="v-pills-user-tab"
+                            id="v-pills-mentors-tab"
                             data-bs-toggle="pill"
-                            data-bs-target="#v-pills-user"
+                            data-bs-target="#v-pills-mentor"
                             type="button" role="tab"
-                            aria-controls="v-pills-user"
+                            aria-controls="v-pills-mentor"
                             aria-selected="false"
-                    >User</button>
+                    >Преподаватели</button>
+                    <button class="nav-link"
+                            id="v-pills-students-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-student"
+                            type="button" role="tab"
+                            aria-controls="v-pills-student"
+                            aria-selected="false"
+                    >Студенты</button>
                 </div>
             </div>
             <div class="col-md-10" style="background-color: #F7F7F7">
@@ -58,7 +65,7 @@
                          role="tabpanel"
                          aria-labelledby="v-pills-admin-tab"
                          tabindex="0">
-                        <h3>Admin panel</h3>
+                        <h3>Администрирование</h3>
                         <div class="container-fluid">
                             <ul class="nav nav-tabs" id="Admin_panel-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -77,22 +84,56 @@
                                 <div class="tab-pane fade show active" id="user_table" role="tabpanel"
                                      aria-labelledby="user_table-tab">
                                     <div>
-                                        <h5>All users</h5>
+                                        </br>
+                                        <h5>Администраторы</h5>
                                     </div>
                                     <table class="table table-striped" style="background-color: #F7F7F7">
                                         <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Age</th>
+                                            <th>Family</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
                                         </thead>
-                                        <tbody id="admintbody">
+                                        <tbody id="adminTableBody">
+                                        </tbody>
+                                    </table>
+                                    </br>
+                                    <h5>Преподаватели</h5>
+                                    <table class="table table-striped" style="background-color: #F7F7F7">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Family</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="mentorTableBody">
+                                        </tbody>
+                                    </table>
+                                    </br>
+                                    <h5>Студенты</h5>
+                                    <table class="table table-striped" style="background-color: #F7F7F7">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Family</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="studentTableBody">
                                         </tbody>
                                     </table>
                                 </div>
@@ -106,22 +147,17 @@
                                             <div class="col">
                                                 <form id="formForNewUser">
                                                     <div class="mb-3">
-                                                        <label for="firstname" class="form-label d-flex justify-content-center"><b>First Name</b></label>
+                                                        <label for="family" class="form-label d-flex justify-content-center"><b>Family</b></label>
                                                         <input type="text"  class="form-control"
-                                                               id="firstname" name="firstname" aria-describedby="emailHelp">
+                                                               id="family" name="family" aria-describedby="emailHelp">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="lastname" class="form-label d-flex justify-content-center"><b>Last Name</b></label>
+                                                        <label for="name" class="form-label d-flex justify-content-center"><b>Name</b></label>
                                                         <input type="text"  class="form-control"
-                                                               id="lastname" name="lastname">
+                                                               id="name" name="name">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="age" class="form-label d-flex justify-content-center"><b>Age</b></label>
-                                                        <input type="number"  class="form-control" id="age"
-                                                               aria-describedby="emailHelp" name="age">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="email" class="form-label d-flex justify-content-center"><b>Email address</b></label>
+                                                        <label for="email" class="form-label d-flex justify-content-center"><b>Email</b></label>
                                                         <input type="email"  class="form-control" id="email"
                                                                aria-describedby="emailHelp" name="email">
                                                     </div>
@@ -131,15 +167,13 @@
                                                                id="password" name="password">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label d-flex justify-content-center"><b>Role
-                                                        </b></label>
-                                                        <select id="roles" multiple class="form-select" size="3" aria-label="size 2 select example">
-                                                            <option value="2">ADMIN</option>
-                                                            <option value="1">USER</option>
+                                                        <label class="form-label d-flex justify-content-center"><b>Role</b></label>
+                                                        <select id="role" name="role">
+                                                            <option value="">Select role...</option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3 d-flex justify-content-center">
-                                                        <button type="submit" class="btn btn-success">Add new user</button>
+                                                        <button type="submit" class="btn btn-success">Add</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -163,9 +197,8 @@
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">First name</th>
-                                <th scope="col">Last name</th>
-                                <th scope="col">Age</th>
+                                <th scope="col">Family</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Role</th>
                             </tr>
@@ -199,28 +232,20 @@
                                            name="id">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="edit-first_name"
-                                           class="col-form-label d-flex justify-content-center"><b>First name</b>:</label>
+                                    <label for="edit-family"
+                                           class="col-form-label d-flex justify-content-center"><b>Family</b>:</label>
                                     <input type="text"
                                            class="form-control"
-                                           id="edit-first_name"
-                                           name="firstName">
+                                           id="edit-family"
+                                           name="family">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="edit-last_name"
-                                           class="col-form-label d-flex justify-content-center"><b>Last name</b>:</label>
+                                    <label for="edit-name"
+                                           class="col-form-label d-flex justify-content-center"><b>Name</b>:</label>
                                     <input type="text"
                                            class="form-control"
-                                           id="edit-last_name"
-                                           name="lastName">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="edit-age"
-                                           class="col-form-label d-flex justify-content-center"><b>Age</b>:</label>
-                                    <input type="number"
-                                           class="form-control"
-                                           id="edit-age"
-                                           name="age">
+                                           id="edit-name"
+                                           name="Name">
                                 </div>
                                 <div class="mb-3">
                                     <label for="edit-email"
@@ -241,30 +266,24 @@
                                 <div class="mb-3">
                                     <label for="edit-role"
                                            class="col-form-label d-flex justify-content-center"><b>Role</b>:</label>
-                                    <select multiple
-                                            name="roles"
-                                            id="edit-role"
-                                            class="form-select"
-                                            size="2">
-                                        <option value="2">
-                                            ADMIN
-                                        </option>
-                                        <option value="1">
-                                            USER
-                                        </option>
+                                    <input readonly type="text"
+                                           class="form-control"
+                                           id="edit-role"
+                                           name="role">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label d-flex justify-content-center"><b>RoleNew</b></label>
+                                    <select id="role-new" name="role-new">
+                                        <option value="">Select role...</option>
                                     </select>
                                 </div>
                             </form>
                         </div>
-
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="editClose">Close</button>
                             <button type="button" class="btn btn-primary" id="editBtn"
-                                    onclick="editUser(); getAdminPage()">Edit</button>
+                                    onclick="editUser()">Edit</button>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -293,28 +312,20 @@
                                            name="id">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="family_del"
+                                           class="col-form-label d-flex justify-content-center"><b>Family</b>:</label>
+                                    <input readonly  type="text"
+                                           class="form-control"
+                                           id="family_del"
+                                           name="family">
+                                </div>
+                                <div class="mb-3">
                                     <label for="name_del"
-                                           class="col-form-label d-flex justify-content-center"><b>First name</b>:</label>
+                                           class="col-form-label d-flex justify-content-center"><b>Name</b>:</label>
                                     <input readonly  type="text"
                                            class="form-control"
                                            id="name_del"
-                                           name="firstName">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lastname_del"
-                                           class="col-form-label d-flex justify-content-center"><b>Last name</b>:</label>
-                                    <input readonly  type="text"
-                                           class="form-control"
-                                           id="lastname_del"
-                                           name="lastName">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="age_del"
-                                           class="col-form-label d-flex justify-content-center"><b>Age</b>:</label>
-                                    <input readonly  type="number"
-                                           class="form-control"
-                                           id="age_del"
-                                           name="age">
+                                           name="name">
                                 </div>
                                 <div class="mb-3">
                                     <label for="email_del"
@@ -334,10 +345,11 @@
                                 </div>
                             </form>
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeDelete">Close</button>
                             <button type="button" class="btn btn-primary" id="deleteBtn"
-                                    onclick="deleteUser(); getAdminPage()">Delete</button>
+                                    onclick="deleteUser()">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -352,9 +364,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<script src="/userJs/userPage.js"></script>
-<script src="/adminJs/adminPage.js"></script>
-<script src="/adminJs/createUserPage.js"></script>
+<script src="/adminJs/admin.js"></script>
+<script src="/adminJs/mentor.js"></script>
+<script src="/adminJs/student.js"></script>
+<script src="/adminJs/saveUser.js"></script>
 <script src="/adminJs/editModalPage.js"></script>
 <script src="/adminJs/deleteModalPage.js"></script>
 </body>

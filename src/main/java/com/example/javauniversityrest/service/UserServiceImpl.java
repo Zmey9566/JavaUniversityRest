@@ -9,6 +9,7 @@ import com.example.javauniversityrest.model.User;
 import com.example.javauniversityrest.security.LoginAuthorization;
 import com.example.javauniversityrest.util.MapperUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
 @Service
 public class UserServiceImpl extends BaseService<User, UserReadDto, UserSaveDto, Long, String, String, User, UserSaveDto, UserReadDto> implements LoginAuthorization {
     public UserServiceImpl(UserDao userDao, UserDao userDao1, BCryptPasswordEncoder bCryptPasswordEncoder, MapperUtils mapperUtils, UserDao userService) {

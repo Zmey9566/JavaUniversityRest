@@ -31,11 +31,11 @@ public class Mentor implements PersonGetSet<Role> {
     @Column(unique = true)
     private String email;
     private String password;
-    @OneToMany
-    private final List<MentorStudent> mentorStudentList = new ArrayList<>();
+//    @OneToMany
+//    private final List<MentorStudent> mentorStudentList = new ArrayList<>();
     @OneToMany(mappedBy = "mentor")
     private final List<MentorStudentLesson> mentorStudentLessonList = new ArrayList<>();
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Role role;
 
 }

@@ -33,7 +33,7 @@ public class User implements PersonGetSet<Role>, UserDetails {
     @NotNull
     private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Role role;
 
     public User(String email, @NotNull String password, Role role) {

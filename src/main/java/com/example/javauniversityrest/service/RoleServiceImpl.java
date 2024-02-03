@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+@Transactional
 @Service
 public class RoleServiceImpl implements RoleService{
 
@@ -34,8 +34,8 @@ public class RoleServiceImpl implements RoleService{
         return roleDao.findAllById(id);
     }
 
-    @Override
-    public Optional<Role> getRoleById(int id) {
-        return roleDao.findById(id);
-    }
+//    @Override
+//    public Optional<Role> getRoleById(int id) {
+//        return roleDao.findById(id);
+//    }
 }

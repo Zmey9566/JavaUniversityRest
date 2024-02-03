@@ -1,20 +1,24 @@
 package com.example.javauniversityrest.dto.save;
 
+import com.example.javauniversityrest.dto.read.RoleReadDto;
+import com.example.javauniversityrest.model.Role;
 import com.example.javauniversityrest.service.PersonGetSet;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Data
 @Component
-public class UserSaveDto implements PersonGetSet<RoleSaveDto> {
+@Setter
+public class UserSaveDto implements PersonGetSet<Role> {
 
     private String email;
-    private RoleSaveDto role;
+    private Role role;
     private String password;
 
-    public UserSaveDto(String email, RoleSaveDto role, String password) {
+    public UserSaveDto(String email, Role role, String password) {
         this.email = email;
         this.role = role;
         this.password = password;

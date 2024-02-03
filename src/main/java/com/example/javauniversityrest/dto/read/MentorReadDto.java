@@ -1,7 +1,5 @@
 package com.example.javauniversityrest.dto.read;
 
-import com.example.javauniversityrest.model.MentorStudent;
-import com.example.javauniversityrest.model.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -23,6 +21,6 @@ public class MentorReadDto {
 
     private String email;
     private RoleReadDto role;
-    private MentorStudent mentorStudent;
+//    private MentorStudent mentorStudent;
     private String password;
 }

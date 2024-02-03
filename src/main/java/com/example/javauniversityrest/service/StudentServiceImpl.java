@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+@Transactional
 @Service
 public class StudentServiceImpl extends BaseService<Student, StudentReadDto, StudentSaveDto, Long, String, String, User, UserSaveDto, UserReadDto> {
 

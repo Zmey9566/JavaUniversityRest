@@ -27,13 +27,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .csrf(csrf -> csrf.disable())
-                .csrf(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+//                .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("api/**")
+                                .requestMatchers("admins/**", "api/admins/**, api/**")
                                     .hasAnyRole( "ADMIN")
-                                .requestMatchers( "api/**")
+                                .requestMatchers( "mentors/**")
+                                    .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
+                                .requestMatchers("students/**")
                                     .hasAnyRole("STUDENT", "MENTOR", "ADMIN")
                                 .anyRequest().authenticated()
                 )
@@ -45,11 +47,11 @@ public class SecurityConfig {
                         final var roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
                         if (roles.contains("ROLE_ADMIN")) {
-                            response.sendRedirect("/api/admins");
+                            response.sendRedirect("/admins");
                         } else if (roles.contains("ROLE_MENTOR")) {
-                            response.sendRedirect("/api/mentor");
+                            response.sendRedirect("/api/mentors");
                         } else if (roles.contains("ROLE_STUDENT")) {
-                            response.sendRedirect("/api/student");
+                            response.sendRedirect("/api/students");
                         }
                     }}));
         return http.build();

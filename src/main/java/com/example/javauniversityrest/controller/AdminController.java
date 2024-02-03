@@ -3,30 +3,42 @@ package com.example.javauniversityrest.controller;
 import com.example.javauniversityrest.dto.read.AdminReadDto;
 import com.example.javauniversityrest.dto.save.AdminSaveDto;
 import com.example.javauniversityrest.service.AdminServiceImpl;
+import com.example.javauniversityrest.service.MentorServiceImpl;
+import com.example.javauniversityrest.service.StudentServiceImpl;
+import com.example.javauniversityrest.util.MapperUtils;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("api/admins")
 public class AdminController {
 
     private final AdminServiceImpl adminService;
+    private final MentorServiceImpl mentorService;
+    private final StudentServiceImpl studentService;
+    private final MapperUtils mapperUtils;
 
     @Autowired
-    public AdminController(AdminServiceImpl adminService) {
+    public AdminController(AdminServiceImpl adminService, MentorServiceImpl mentorService, StudentServiceImpl studentService, MapperUtils mapperUtils) {
         this.adminService = adminService;
+        this.mentorService = mentorService;
+        this.studentService = studentService;
+        this.mapperUtils = mapperUtils;
     }
 
     @GetMapping
     public ResponseEntity<List<AdminReadDto>> showAdmins() {
-        return new ResponseEntity<>(adminService.getAllByModel(), HttpStatus.OK);
+        final var adminByModel = adminService.getAllByModel();
+        return new ResponseEntity<>(adminByModel, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

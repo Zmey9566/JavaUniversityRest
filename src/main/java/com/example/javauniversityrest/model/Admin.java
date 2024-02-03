@@ -30,7 +30,7 @@ public class Admin implements PersonGetSet<Role> {
     @Column(unique = true)
     private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Role role;
 
     private String password;

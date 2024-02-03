@@ -12,5 +12,5 @@ public interface RoleService {
 
     List<Role> getRolesListById(List<Integer> id);
 
-    Optional<Role> getRoleById(int id);
+//    Optional<Role> getRoleById(int id);
 }

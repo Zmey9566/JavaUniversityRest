@@ -23,7 +23,7 @@ public class MapperUtils<M, R, S> {
     ModelMapper modelMapper = new ModelMapper();
 
     public R mapToModelReadDto (M m, Class<? extends R> R) {return modelMapper.map(m, R);}
-    public R mapToModelSaveDto (M m, Class<? extends R> S) {return modelMapper.map(m, S);}
+    public S mapToModelSaveDto (M m, Class<? extends S> S) {return modelMapper.map(m, S);}
     public M mapToModelRead (R r, Class<? extends M> M) {return modelMapper.map(r, M);}
     public M mapToModelSave (S s, Class<? extends M> M) {return modelMapper.map(s, M);}
 

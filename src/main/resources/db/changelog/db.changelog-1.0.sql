@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS admin
     family varchar(25),
     name   varchar(25),
     email varchar(50),
-    role_id INT references role (id) ON DELETE CASCADE,
+    role_id INT references role (id) ON DELETE CASCADE ON UPDATE CASCADE,
     password varchar(60)
     );
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS mentor
     family varchar(25),
     name   varchar(25),
     email varchar(50),
-    role_id INT references role (id) ON DELETE CASCADE,
+    role_id INT references role (id) ON DELETE CASCADE ON UPDATE CASCADE,
     password varchar(60)
     );
 
@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS student
     family varchar(25),
     name   varchar(25),
     email varchar(50),
-    level varchar(50),
-    role_id INT references role (id) ON DELETE CASCADE,
+--     level varchar(50),
+    role_id INT references role (id) ON DELETE CASCADE ON UPDATE CASCADE,
     password varchar(60)
     );
 
@@ -60,6 +60,6 @@ CREATE TABLE IF NOT EXISTS users
 (
     id     SERIAL PRIMARY KEY,
     email varchar(50),
-    role_id INT references role (id) ON DELETE CASCADE,
+    role_id INT references role (id) ON DELETE CASCADE ON UPDATE CASCADE,
     password varchar(60)
     );

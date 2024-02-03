@@ -14,10 +14,11 @@ import com.example.javauniversityrest.model.User;
 import com.example.javauniversityrest.util.MapperUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+@Transactional
 @Service
 public class MentorServiceImpl extends BaseService<Mentor, MentorReadDto, MentorSaveDto, Long, String, String, User, UserSaveDto, UserReadDto> {
 
