@@ -11,6 +11,7 @@ const bsEditModal = new bootstrap.Modal(editModal);
 
 let userId1;
 let userRoleId1;
+let roleName;
 async function loadDataForEditModal(id1, roleId1) {
     addRolesEdit();
     userRoleId1 = roleId1;
@@ -49,8 +50,8 @@ async function addRolesEdit() {
                     value: role.id,
                     text: role.name.toString().replaceAll("ROLE_", ""),
                 }));
-            // const roleNameFind = data;
-            // roleName = roleNameFind;
+            const roleNameFind = data;
+            roleName = roleNameFind;
                 document.querySelector("select[name=role-new]").innerHTML = roles.map(
                     (option) => `<option value="${option.value}">${option.text}</option>`
                 );
@@ -67,36 +68,77 @@ async function editUser() {
     let role1 = {
         id: roleId
     };
-    let url = '';
-    if (roleId == 1) {
-        url = 'api/admins'
-    } else if (roleId == 2) {
-        url = 'api/mentors'
-    } else if (roleId == 3){
-        url = 'api/students'
+
+    if (roleId != userRoleId1) {
+        let url = '';
+        if (roleId == 1) {
+            url = 'api/admins'
+        } else if (roleId == 2) {
+            url = 'api/mentors'
+        } else if (roleId == 3) {
+            url = 'api/students'
+        }
+        const urlEdit = url + '/add';
+        let method = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                family: family,
+                name: name,
+                email: email,
+                role: role1,
+                password: password
+            })
+        }
+        console.log(urlEdit, method)
+        await fetch(urlEdit, method).then(() => {
+            closeEditButton.click();
+            form_ed.reset();
+            deleteAfterEdit()
+            newAdmin();
+            newMentor();
+            newStudent();
+        })
+    } else if (roleId == userRoleId1){
+            let url;
+    if (userRoleId1 == 1) {
+        url = 'api/admins/'
+    } else if (userRoleId1 == 2) {
+        url = 'api/mentors/'
+    } else {
+        url = 'api/students/'
     }
-    const urlEdit = url + '/add';
-    let method = {
-        method: 'POST',
+    const urlEdit = url + id_ed.value;
+    let roleNameFind = roleName.find(role => role.id === userRoleId1).name;
+    console.dir(form_ed);
+    const method = {
+        method: 'PATCH',
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            family: family,
-            name: name,
-            email: email,
-            role: role1,
-            password: password
+            id: id_ed.value,
+            family: form_ed.family.value,
+            name: name_ed.value,
+            email: form_ed.email.value,
+            role: {
+                id: userRoleId1,
+                name: roleNameFind
+            },
+            password: form_ed.password.value
         })
     }
-    console.log(urlEdit,method)
-    await fetch(urlEdit,method).then(() => {
-        closeEditButton.click();
-        deleteAfterEdit()
+
+    console.log(urlEdit, method);
+    await fetch(urlEdit, method)
+        .then(() => closeEditButton.click())
+        form_ed.reset();
         newAdmin();
         newMentor();
         newStudent();
-    })
+    }
 }
 
 async function deleteAfterEdit() {

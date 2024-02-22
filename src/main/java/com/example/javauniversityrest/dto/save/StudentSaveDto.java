@@ -34,4 +34,14 @@ public class StudentSaveDto implements PersonGetSet<Role> {
     public Long getId() {
         return null;
     }
+
+    @Override
+    public Long getModelId() {
+        return null;
+    }
+
+    @Override
+    public void setModelId(Long modelId) {
+
+    }
 }

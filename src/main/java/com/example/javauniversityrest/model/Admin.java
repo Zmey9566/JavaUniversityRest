@@ -42,4 +42,14 @@ public class Admin implements PersonGetSet<Role> {
         this.role = role;
         this.password = password;
     }
+
+    @Override
+    public Long getModelId() {
+        return id;
+    }
+
+    @Override
+    public void setModelId(Long modelId) {
+
+    }
 }

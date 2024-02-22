@@ -61,5 +61,6 @@ CREATE TABLE IF NOT EXISTS users
     id     SERIAL PRIMARY KEY,
     email varchar(50),
     role_id INT references role (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    model_id INT,
     password varchar(60)
     );

@@ -1,7 +1,6 @@
 package com.example.javauniversityrest.service;
 
 
-import com.example.javauniversityrest.model.Role;
 import com.example.javauniversityrest.util.MapperUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,7 +24,6 @@ public abstract class BaseService<M extends PersonGetSet, R, S extends PersonGet
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.mapperUtils = mapperUtils;
     }
-//    Role role = new Role(1, "ROLE_ADMIN");
     @Override
     public void save(S saveDto, Class<M> clazz, Usdto userSaveDto, Class<U> uClass) {
         final var model = (M) mapperUtils.mapToModelSave(saveDto, clazz); // Преобразовываем МодельДТО в модель
@@ -37,6 +35,7 @@ public abstract class BaseService<M extends PersonGetSet, R, S extends PersonGet
         // Для последующей корректой работы SpringSecurity копируем данные, необходимые для авторизации в системе созданного пользователя в сущность User
         user.setEmail(model.getEmail());
         user.setPassword(encode);
+        user.setModelId(model.getModelId());
         user.setRole(model.getRole());
         uRepository.save(user); //Сохраняем Юзера
     }
@@ -74,6 +73,7 @@ public abstract class BaseService<M extends PersonGetSet, R, S extends PersonGet
         // Обновляем данные юзера
         user.setEmail(model.getEmail());
         user.setPassword(model.getPassword());
+        user.setModelId((Long) id);
         user.setRole(model.getRole());
         uRepository.save(user);
     }

@@ -12,6 +12,7 @@ import com.example.javauniversityrest.model.Admin;
 import com.example.javauniversityrest.model.Mentor;
 import com.example.javauniversityrest.model.User;
 import com.example.javauniversityrest.util.MapperUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorReadDto, Mentor
 
     private final UserDao userRepository;
     private final MentorDao mentorRepository;
+//    private final UserDao userDao;
     private final MapperUtils<User, UserReadDto, User> userMapper;
 
     public MentorServiceImpl(MentorDao mentorDao, UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder, MapperUtils<Mentor, MentorReadDto, MentorSaveDto> mapperUtils, UserDao userRepository, MentorDao mentorRepository, MapperUtils<User, UserReadDto, User> userMapper) {
@@ -38,7 +40,8 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorReadDto, Mentor
     }
 
     public void update(MentorReadDto readDto, Long id) {
-        final var byEmail = userRepository.findByEmail(mentorRepository.findById(id).get().getEmail());
+        final var byEmail = userRepository.findByEmail(mentorRepository.findById(id).get().getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
         final var userReadDto = userMapper.mapToModelReadDto(byEmail, UserReadDto.class);
         update(readDto, id, Mentor.class, userReadDto, User.class);
     }
@@ -49,5 +52,13 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorReadDto, Mentor
 
     public List<MentorReadDto> getAllByModel() {
         return getAllByModel(MentorReadDto.class);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        final var mentorForDel = mentorRepository.findById(id).map(m -> m.getRole().getId()).orElseThrow(() -> new IllegalArgumentException());
+        super.deleteById(id);
+        userRepository.deleteByModelIdAndRoleId(id, mentorForDel);
+
     }
 }

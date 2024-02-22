@@ -29,12 +29,12 @@ values
     ('Smirnov', 'Alex', 'ccc@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
     ('Petrov', 'Petr', 'vvv@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru');
 
-insert into users(email, role_id, password)
+insert into users(email, role_id, model_id, password)
 values
-    ('top_secret99@mail.ru', 1, '$2y$10$51ABYWy1u/EKuGIsmQCnxeOzE9sYBB/w8etyjl/ExyPoPL/c89k2u'),
-    ('Almazov@mail.ru', 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
-    ('Evmenov@mail.ru', 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
-    ('aaa@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
-    ('bbb@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
-    ('ccc@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
-    ('vvv@mail.ru', 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru');
+    ('top_secret99@mail.ru', 1, 1, '$2y$10$51ABYWy1u/EKuGIsmQCnxeOzE9sYBB/w8etyjl/ExyPoPL/c89k2u'),
+    ('Almazov@mail.ru', 2, 1, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('Evmenov@mail.ru', 2, 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('aaa@mail.ru', 3, 1, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('bbb@mail.ru', 3, 2, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('ccc@mail.ru', 3, 3, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru'),
+    ('vvv@mail.ru', 3, 4, '$2y$10$igIYAbnjLwuN3RvKbRB/A.pY7YDpTr5Hv8Y0rAtgYvPPI8R5rmkru');

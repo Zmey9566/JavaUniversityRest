@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,6 +33,9 @@ public class User implements PersonGetSet<Role>, UserDetails {
 
     @NotNull
     private String password;
+
+    @NotNull
+    private Long modelId;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     private Role role;

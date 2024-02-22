@@ -1,5 +1,7 @@
 package com.example.javauniversityrest.controller;
 
+import com.example.javauniversityrest.dao.RoleDao;
+import com.example.javauniversityrest.dao.UserDao;
 import com.example.javauniversityrest.dto.read.AdminReadDto;
 import com.example.javauniversityrest.dto.save.AdminSaveDto;
 import com.example.javauniversityrest.service.AdminServiceImpl;
@@ -19,19 +21,21 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("api/admins")
+@RequestMapping("/api/admins")
 public class AdminController {
 
     private final AdminServiceImpl adminService;
     private final MentorServiceImpl mentorService;
     private final StudentServiceImpl studentService;
+    private final UserDao userDao;
     private final MapperUtils mapperUtils;
 
     @Autowired
-    public AdminController(AdminServiceImpl adminService, MentorServiceImpl mentorService, StudentServiceImpl studentService, MapperUtils mapperUtils) {
+    public AdminController(AdminServiceImpl adminService, MentorServiceImpl mentorService, StudentServiceImpl studentService, UserDao userDao, MapperUtils mapperUtils) {
         this.adminService = adminService;
         this.mentorService = mentorService;
         this.studentService = studentService;
+        this.userDao = userDao;
         this.mapperUtils = mapperUtils;
     }
 
@@ -53,7 +57,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteAdmin(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteAdmin(@PathVariable("id") Long id) {
         adminService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

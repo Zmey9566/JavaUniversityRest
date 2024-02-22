@@ -17,6 +17,7 @@ public class UserSaveDto implements PersonGetSet<Role> {
     private String email;
     private Role role;
     private String password;
+    private Long modelId;
 
     public UserSaveDto(String email, Role role, String password) {
         this.email = email;
@@ -26,6 +27,11 @@ public class UserSaveDto implements PersonGetSet<Role> {
 
     @Override
     public Long getId() {
+        return null;
+    }
+
+    @Override
+    public Long getModelId() {
         return null;
     }
 }

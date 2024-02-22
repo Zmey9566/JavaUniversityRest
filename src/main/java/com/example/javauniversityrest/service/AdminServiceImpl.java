@@ -14,6 +14,7 @@ import com.example.javauniversityrest.model.User;
 import com.example.javauniversityrest.util.MapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 @Service
+@Transactional
 public class AdminServiceImpl extends BaseService<Admin, AdminReadDto, AdminSaveDto, Long, String, String, User, UserSaveDto, UserReadDto> {
 
     private final UserDao userRepository;
@@ -40,7 +42,8 @@ public class AdminServiceImpl extends BaseService<Admin, AdminReadDto, AdminSave
     }
 
     public void update(AdminReadDto readDto, Long id) {
-        final var byEmail = userRepository.findByEmail(adminRepository.findById(id).get().getEmail());
+        final var byEmail = userRepository.findByEmail(adminRepository.findById(id).get().getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
         final var userReadDto = userMapper.mapToModelReadDto(byEmail, UserReadDto.class);
         update(readDto, id, Admin.class, userReadDto, User.class);
     }
@@ -51,5 +54,12 @@ public class AdminServiceImpl extends BaseService<Admin, AdminReadDto, AdminSave
 
     public List<AdminReadDto> getAllByModel() {
         return getAllByModel(AdminReadDto.class);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        final var roleId = adminRepository.findById(id).map(a -> a.getRole().getId()).orElseThrow(() -> new IllegalArgumentException("Неверный id роли"));
+        super.deleteById(id);
+        userRepository.deleteByModelIdAndRoleId(id, roleId);
     }
 }

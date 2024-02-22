@@ -13,6 +13,7 @@ public class UserReadDto {
     private String email;
     private RoleReadDto role;
     private String password;
+    private Long modelId;
 
     public UserReadDto(String email, RoleReadDto role, String password) {
         this.email = email;

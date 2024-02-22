@@ -39,4 +39,13 @@ public class Student implements PersonGetSet<Role> {
     @ManyToOne(cascade = CascadeType.MERGE)
     private Role role;
 
+    @Override
+    public Long getModelId() {
+        return id;
+    }
+
+    @Override
+    public void setModelId(Long modelId) {
+
+    }
 }

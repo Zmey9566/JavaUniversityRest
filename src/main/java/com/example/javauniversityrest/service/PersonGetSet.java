@@ -8,6 +8,8 @@ public interface PersonGetSet<T> {
 //    String getName();
 //    void setName(String name);
     Long getId();
+    Long getModelId();
+    void setModelId(Long modelId);
     String getEmail();
     void setEmail(String email);
     T getRole();

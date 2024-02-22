@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/mentors")
+@RequestMapping("/api/mentors")
 public class MentorController {
 
     private final MentorServiceImpl mentorService;
